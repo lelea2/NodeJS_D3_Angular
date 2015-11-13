@@ -1,0 +1,69 @@
+<h2>
+    <span>Retailer Dashboard</span>
+    <div class="dropdown pull-right">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            Retailers &nbsp;&nbsp;<span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        {{#each partners}}
+            <li><a href="/?p={{partnerid}}" data-id="{{partnerid}}">{{partnername}}</a></li>
+        {{/each}}
+        </ul>
+    </div>
+</h2>
+<div class="separator"></div>
+<div class="details-container" ng-controller="NREAppController">
+    <div class="overview row">
+        <h4><strong>Overview</strong></h4>
+        <div class="partner-data col-md-6">
+            <p><strong>PartnerName:</strong> {{partnerData.partnername}}</p>
+            <p><strong>PartnerId:</strong> {{partnerData.partnerid}}</p>
+            <p><strong>PartnerCode:</strong> {{partnerData.partnercode}}</p>
+            <p><strong>Annonymous UserId:</strong> {{partnerData.annonuserid}}</p>
+        </div>
+        <div class="nre col-md-6">
+            <script>
+                window.CI_NRE = "{{partnerData.nrebuckets}}";
+            </script>
+            <div class="charts">
+                <div id="pie-chart"></div>
+            </div>
+        </div>
+    </div>
+    <div class="stats row">
+        <h4><strong>Stats</strong></h4>
+        <form class="row clearfix">
+            <input checked type="radio" ng-model="daycount" ng-change="changeGraph()" name="daycount" value="8">&nbsp;Week
+            <input type="radio" ng-model="daycount" ng-change="changeGraph()" name="daycount" value="31">&nbsp;Month
+        </form>
+        <div class="col-md-4">
+            <div class="tile activations active" ng-click="activationClick()">
+            <p class="title">Total Activations</p>
+            <p ng-bind="totalActivation"></p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="tile redemptions" ng-click="remdemptionClick()">
+            <p class="title">Total Redemptions</p>
+            <p ng-bind="totalRedemption"></p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="tile activeusers" ng-click="activeuserClick()">
+            <p class="title">Total Active Users</p>
+            <p ng-bind="totalActiveUsers"></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="charts row">
+        <script>
+        window.CI_weeklyStats = {{{json weeklyStats}}};
+        window.CI_currentPartner = "{{partnerData.partnerid}}";
+        window.CI_Perf = {{{json perfStats}}};
+        window.CI_nreBreakdown = {{{json actDrilldn}}};
+        window.CI_actuBreakdown = {{{json actuDrilldn}}}
+        </script>
+        <div id="bar-chart"></div>
+    </div>
+</div>
